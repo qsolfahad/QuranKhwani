@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">268943857403-559qij9ivbvn3rcu1st8jnb3c1n3reg6.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">268943857403</string>
+    <string name="google_api_key" translatable="false">AIzaSyBRy93wMPrqo9GsRqElqgdGk20Y721EMWw</string>
+    <string name="google_app_id" translatable="false">1:268943857403:android:fe0f5e975f6d15e484025e</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBRy93wMPrqo9GsRqElqgdGk20Y721EMWw</string>
+    <string name="google_storage_bucket" translatable="false">alfurqan-dc223.appspot.com</string>
+    <string name="project_id" translatable="false">alfurqan-dc223</string>
+</resources>
