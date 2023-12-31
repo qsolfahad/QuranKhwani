@@ -1,0 +1,1 @@
+ C:\\develop\\Qurankhwani\\.dart_tool\\flutter_build\\2146a828dc57630fef4750cc072b5678\\native_assets.yaml: 

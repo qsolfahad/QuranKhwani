@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/material.dart';
 import 'package:qurankhwani/home.dart';
 
@@ -35,6 +35,7 @@ class _InitStateState extends State<InitState> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+          backgroundColor: HexColor('F5F9FC'),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

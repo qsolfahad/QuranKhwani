@@ -284,14 +284,10 @@ class _JuzListState extends State<JuzList> {
     var textscale = MediaQuery.of(context).textScaleFactor;
     return SafeArea(
       child: Scaffold(
+          backgroundColor: HexColor('F5F9FC'),
+           
           body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.green[400]!, Colors.green[700]!],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
+        
         child: Column(
           children: <Widget>[
             const SizedBox(
@@ -300,21 +296,26 @@ class _JuzListState extends State<JuzList> {
             Row(
               children: [
                 IconButton(
-                  icon: Icon(Icons.menu_open, color: HexColor("#ffde59")),
+                  icon: ImageIcon(AssetImage('assets/image/back.png')),
                   onPressed: () {
                     Navigator.pop(context);
                   },
                 ),
-                Container(
-                  margin: const EdgeInsets.only(left: 65),
-                  child: Text(
-                    "Juz List",
-                    style: TextStyle(
-                        color: HexColor("#ffde59"),
-                        fontFamily: 'Schyler',
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold),
-                  ),
+                Spacer(),
+                Text(
+                  "Juz List",
+                  style:  GoogleFonts.montserrat(
+                            textStyle: TextStyle(
+                                fontSize: 40,
+                                color: HexColor('#2a6e2d'),
+                                fontWeight: FontWeight.bold)),
+                ),
+                 Spacer(),
+                IconButton(
+                  icon: ImageIcon(AssetImage('assets/image/search.png')),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
               ],
             ),
@@ -324,15 +325,15 @@ class _JuzListState extends State<JuzList> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
-                style: TextStyle(color: HexColor("#ffde59")),
-                cursorColor: HexColor("#ffde59"),
+                style: TextStyle(color: Colors.lightGreen),
+                cursorColor: Colors.lightGreen,
                 onChanged: (value) {
                   filterSearchResults(value);
                 },
                 controller: editingController,
                 decoration: InputDecoration(
                   labelText: "Search",
-                  labelStyle: TextStyle(color: HexColor("#ffde59")),
+                  labelStyle: TextStyle(color: Colors.lightGreen),
                   border: OutlineInputBorder(
                     borderSide:
                         const BorderSide(color: Colors.white, width: 2.0),
@@ -344,7 +345,7 @@ class _JuzListState extends State<JuzList> {
                         const BorderSide(color: Colors.white, width: 2.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
-                  focusColor: HexColor("#ffde59"),
+                  focusColor:  Colors.lightGreen,
                   //suffixIconColor: HexColor("#a79162"),
                   //iconColor: HexColor("#a79162"),
 
@@ -353,9 +354,15 @@ class _JuzListState extends State<JuzList> {
               ),
             ),
             _buildLastBookmarkView(HexColor("#68A629")),
+            SizedBox(height: 20,),
             Expanded(
-              child: ListView.builder(
+              child: GridView.builder(
                 shrinkWrap: true,
+  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+    crossAxisCount: 2, // You can adjust the number of columns as needed
+    crossAxisSpacing: 8.0, // Adjust the spacing between columns
+    mainAxisSpacing: 8.0, // Adjust the spacing between rows
+  ),
                 itemCount: items.length,
                 itemBuilder: (context, index) {
                   final display1 =
@@ -384,25 +391,34 @@ class _JuzListState extends State<JuzList> {
                                     Colors.black)),
                           );
                         },
-                        child: Card(
-                          color: HexColor("#ffde59"),
+                        child: Container(
+                          height: 167,
+                          width: 171,
+                          decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(25), color: Colors.white),
                           child: ListTile(
-                            trailing: Text(
-                              '${itemsAr[index]} ',
-                              style: GoogleFonts.lateef(textStyle: display1),
-                              // style: TextStyle(
-                              //   color: HexColor("#2a6e2d"),
-                              //   fontFamily: ArabicFonts.Lateef,
-                              //   package: 'google_fonts_arabic',
-                              //   fontSize: 30,
-                              // ),
+                            title: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                '${items[index]} ',
+                                 style: GoogleFonts.montserrat(
+                              textStyle: TextStyle(
+                                   fontSize: textFontSize,
+                                  color: HexColor('#2a6e2d'),
+                                  fontWeight: FontWeight.bold))
+                              ),
                             ),
-                            title: Text(
-                              '${items[index]} ',
-                              style: TextStyle(
-                                color: HexColor("#2a6e2d"),
-                                fontSize: textFontSize * textscale,
-                                fontFamily: 'Schyler',
+                            subtitle: Container(
+                              alignment: Alignment.topRight,
+                              child: Text(
+                                '${itemsAr[index]} ',
+                                style: GoogleFonts.lateef(textStyle: display1),
+                                // style: TextStyle(
+                                //   color: HexColor("#2a6e2d"),
+                                //   fontFamily: ArabicFonts.Lateef,
+                                //   package: 'google_fonts_arabic',
+                                //   fontSize: 30,
+                                // ),
                               ),
                             ),
                           ),
@@ -422,7 +438,7 @@ class _JuzListState extends State<JuzList> {
                       elevation: 0,
                       currentIndex: _selectedIndex,
                       onTap: _onItemTapped,
-                      selectedItemColor: HexColor("#ffde59"),
+                      selectedItemColor:  Colors.lightGreen,
                       items: const [
                         BottomNavigationBarItem(
                             icon: Icon(Icons.home), label: 'Home'),

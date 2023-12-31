@@ -277,14 +277,9 @@ class _SurahListState extends State<SurahList> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+         backgroundColor: HexColor('F5F9FC'),
           body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.green[400]!, Colors.green[700]!],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
+        
         child: Column(
           children: <Widget>[
             const SizedBox(
@@ -292,22 +287,27 @@ class _SurahListState extends State<SurahList> {
             ),
             Row(
               children: [
-                IconButton(
-                  icon: Icon(Icons.menu_open, color: HexColor("#ffde59")),
+                   IconButton(
+                  icon: ImageIcon(AssetImage('assets/image/back.png')),
                   onPressed: () {
                     Navigator.pop(context);
                   },
                 ),
-                Container(
-                  margin: const EdgeInsets.only(left: 55),
-                  child: Text(
-                    "Surah List",
-                    style: TextStyle(
-                        color: HexColor("#ffde59"),
-                        fontFamily: 'Schyler',
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold),
-                  ),
+                Spacer(),
+                Text(
+                  "Surah List",
+                  style:  GoogleFonts.montserrat(
+                            textStyle: TextStyle(
+                                fontSize: 40,
+                                color: HexColor('#2a6e2d'),
+                                fontWeight: FontWeight.bold)),
+                ),
+                 Spacer(),
+                IconButton(
+                  icon: ImageIcon(AssetImage('assets/image/search.png')),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
               ],
             ),
@@ -317,15 +317,15 @@ class _SurahListState extends State<SurahList> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
-                style: TextStyle(color: HexColor("#ffde59")),
-                cursorColor: HexColor("#ffde59"),
+                style: TextStyle(color: Colors.lightGreen),
+                cursorColor: Colors.lightGreen,
                 onChanged: (value) {
                   filterSearchResults(value);
                 },
                 controller: editingController,
                 decoration: InputDecoration(
                   labelText: "Search",
-                  labelStyle: TextStyle(color: HexColor("#ffde59")),
+                  labelStyle: TextStyle(color: Colors.lightGreen),
                   border: OutlineInputBorder(
                     borderSide:
                         const BorderSide(color: Colors.white, width: 2.0),
@@ -337,7 +337,7 @@ class _SurahListState extends State<SurahList> {
                         const BorderSide(color: Colors.white, width: 2.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
-                  focusColor: HexColor("#ffde59"),
+                  focusColor: Colors.lightGreen,
                   //suffixIconColor: HexColor("#a79162"),
                   //iconColor: HexColor("#a79162"),
 
@@ -346,9 +346,15 @@ class _SurahListState extends State<SurahList> {
               ),
             ),
             _buildLastBookmarkView(HexColor("#68A629")),
+            SizedBox(height: 20,),
             Expanded(
-              child: ListView.builder(
+              child: GridView.builder(
                 shrinkWrap: true,
+  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+    crossAxisCount: 2, // You can adjust the number of columns as needed
+    crossAxisSpacing: 8.0, // Adjust the spacing between columns
+    mainAxisSpacing: 8.0, // Adjust the spacing between rows
+  ),
                 itemCount: items.length,
                 itemBuilder: (context, index) {
                   final display1 =
@@ -377,12 +383,19 @@ class _SurahListState extends State<SurahList> {
                                     Colors.green)),
                           );
                         },
-                        child: Card(
-                          color: HexColor("#ffde59"),
-                          child: ListTile(
-                            trailing: Text(
-                              '${itemsAr[index]} ',
-                              style: GoogleFonts.lateef(textStyle: display1),
+                        child:  Container(
+                          height: 167,
+                          width: 171,
+                          decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(25), color: Colors.white),
+                         child: ListTile(
+                            subtitle: Container(
+                              alignment: Alignment.topRight,
+                              
+                              child: Text(
+                                '${itemsAr[index]} ',
+                                style: GoogleFonts.lateef(textStyle: display1),
+                              ),
                             ),
                             title: Text(
                               '${items[index]} ',

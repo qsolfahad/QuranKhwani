@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:math';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:qurankhwani/GameLists.dart';
 import 'package:qurankhwani/bookmark_page.dart';
 import 'package:qurankhwani/duaLists.dart';
@@ -636,64 +637,25 @@ class _MyHomePageState extends State<MyHomePage> {
           ignoring: isOpened,
           child: SafeArea(
             child: Scaffold(
-              appBar: AppBar(
-                leading: IconButton(
-                  icon: const Icon(Icons.menu),
-                  onPressed: () => toggleMenu(),
-                ),
 
-                flexibleSpace: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colors.green[400]!, Colors.green[700]!],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                  ),
-                ),
-                //  backgroundColor: HexColor("#30652c"),
-                title: Row(
-                  children: [
-                    // Spacer(),
-                    Container(
-                      margin: const EdgeInsets.only(left: 45),
-                      child: Text(
-                        widget.title,
-                        style: TextStyle(
-                            fontSize: 25,
-                            color: HexColor("#ffde59"),
-                            fontFamily: 'Schyler'),
-                      ),
-                    ),
-                    const Spacer(),
-                    // CircleAvatar(
-                    //   radius: 18,
-                    //   backgroundColor: Color(0xffFDCF09),
-                    //   child: main.url != null
-                    //       ? ClipRRect(
-                    //           borderRadius: BorderRadius.circular(50),
-                    //           child: Image.file(
-                    //             main.url,
-                    //             width: 100,
-                    //             height: 100,
-                    //             fit: BoxFit.cover,
-                    //           ),
-                    //         )
-                    //       : Container(
-                    //           decoration: BoxDecoration(
-                    //               color: Colors.grey[200],
-                    //               borderRadius: BorderRadius.circular(50)),
-                    //           width: 100,
-                    //           height: 100,
-                    //           child: Icon(
-                    //             Icons.camera_alt,
-                    //             color: Colors.grey[800],
-                    //           ),
-                    //         ),
-                    // ),
-                    IconButton(
-                        onPressed: () {
-                          showDialog(
+             backgroundColor: HexColor('F5F9FC'),
+              body: SingleChildScrollView(
+                child: Center(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Container(alignment: Alignment.topLeft,child: IconButton(onPressed: () => toggleMenu(), icon: ImageIcon(AssetImage('assets/image/drawer.png')))),
+                                            Spacer(flex: 2,),
+                         Container(child: Text("Main Menu",style: GoogleFonts.montserrat(
+                            textStyle: TextStyle(
+                                fontSize: 20,
+                                color: HexColor('#2a6e2d'),
+                                fontWeight: FontWeight.bold)),),),
+                         Spacer(flex: 2,),
+                                           Container(alignment: Alignment.topLeft,child: IconButton(onPressed: (){ showDialog(
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
@@ -747,34 +709,150 @@ class _MyHomePageState extends State<MyHomePage> {
                                     },
                                   ));
                             },
-                          );
-                        },
-                        icon: const Icon(Icons.settings))
-                  ],
-                ),
-              ),
-              body: SingleChildScrollView(
-                child: Center(
-                  child: Column(
-                    children: [
+                          );}, icon: Icon(Icons.settings))),
+                                       
+                          ],
+                        ),
+                      ),
                       const SizedBox(
                         height: 20,
                       ),
-                      Image.asset(
-                        "assets/image/Qurankhwani.png",
-                        height: 200,
-                      ),
+                     Container(
+  width: 357,
+  height: 178,
+  decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(25),
+    gradient: LinearGradient(
+      colors: [Colors.green[100]!, Colors.blue[100]!], // You can customize the colors
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ),
+  ),
+  child: Row(
+    children: [
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 30, left: 30),
+            child: Text(
+              'Last \nListening',
+              style: GoogleFonts.montserrat(
+                textStyle: TextStyle(
+                  fontSize: 20,
+                  color: HexColor('#2a6e2d'),
+                  fontWeight: FontWeight.w800
+                ),
+              ),
+            ),
+          ),
+          Spacer(),
+          //  Container(
+          //   margin: EdgeInsets.only(top: 20, left: 30),
+          //   child: Text(
+          //     'Al-Fatiha',
+          //     style: GoogleFonts.montserrat(
+          //       textStyle: TextStyle(
+          //         fontSize: 16,
+          //         color: HexColor('#2a6e2d'),
+          //         fontWeight: FontWeight.w500
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          //  Container(
+          //   margin: EdgeInsets.only( left: 30),
+          //   child: Text(
+          //     'Page no: 1',
+          //     style: GoogleFonts.montserrat(
+          //       textStyle: TextStyle(
+          //         fontSize: 12,
+          //         color: HexColor('#2a6e2d'),
+          //         fontWeight: FontWeight.w500
+          //       ),
+          //     ),
+          //   ),
+          // ),
+           GestureDetector(
+            onTap: () async{
+ var value = await FirebaseAuth.instance.signInAnonymously();
+              await FirebaseFirestore.instance
+                  .collection("ListView")
+                  .where("userId", isEqualTo: value.user?.uid)
+                  .orderBy("createdDate", descending: true)
+                  .limit(1)
+                  .get()
+                  .then((value) => value.docs.forEach((element) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => JuzPageView(
+                                  element.data()["surahName"],
+                                  element.data()["surahNo"],
+                                  element.data()["surahAyah"],
+                                  element.data()["surahPage"],
+                                  element.data()["surahEndPage"],
+                                  '',
+                                  element.data()["currentPosition"],
+                                  Colors.black)),
+                        );
+
+                        //duplicateItems =
+                        //   List<String>.generate(114, (i) => );
+                      }));
+            },
+             child: Container(
+              width: 120,
+              height: 33,
+             
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: Colors.white,),
+              margin: EdgeInsets.only(top: 20,  left: 30),
+              child: Center(
+                child: Text(
+                  'Continue',
+                  style: GoogleFonts.montserrat(
+                    textStyle: TextStyle(
+                      fontSize: 12,
+                      color: HexColor('#2a6e2d'),
+                      fontWeight: FontWeight.w500
+                    ),
+                  ),
+                ),
+              ),
+                       ),
+           ),
+           SizedBox(height: 20,
+           )
+        ],
+      ),
+      Spacer(),
+      Container(
+        padding: const EdgeInsets.all(16.0),
+        child: Image.asset(
+          "assets/image/Qurankhwani.png",
+          width: 170,
+          height: 170,
+        ),
+      ),
+    ],
+  ),
+),
+
+                      // Image.asset(
+                      //   "assets/image/Qurankhwani.png",
+                      //   height: 200,
+                      // ),
                       const SizedBox(
                         height: 20,
                       ),
                       Center(
                         child: Text(
                           _today.toFormat("MMMM dd yyyy"),
-                          style: TextStyle(
+                          style: GoogleFonts.montserrat(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
                               color: HexColor("#2a6e2d"),
-                              fontFamily: 'Schyler'),
+                              ),
                         ),
                       ),
                       const SizedBox(
@@ -784,13 +862,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
                           height: MediaQuery.of(context).size.shortestSide,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [Colors.green[400]!, Colors.green[700]!],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                          ), // constrain height
+                         // constrain height
                           child: GridView.count(
                               crossAxisCount: 2,
                               //physics: const NeverScrollableScrollPhysics(),
@@ -989,22 +1061,18 @@ const List<Choice> choices = <Choice>[
       color: '#f5f5f5'),
   Choice(
       title: 'Total Count',
-      image: "assets/image/count.jpg",
+      image: "assets/image/count.png",
       value: "Count",
       color: '#ffffff'),
-  Choice(
-      title: 'Continue',
-      image: "assets/image/continue.jpg",
-      value: "Continue",
-      color: '#ffffff'),
+ 
   Choice(
       title: 'Groups',
-      image: "assets/image/groups.jfif",
+      image: "assets/image/group.png",
       value: "Groups",
       color: '#ffffff'),
   Choice(
       title: 'Duas',
-      image: "assets/image/dua.jpg",
+      image: "assets/image/dua.png",
       value: "Duas",
       color: '#ffffff'),
   Choice(
@@ -1046,33 +1114,7 @@ class SelectCard extends StatelessWidget {
                     builder: (context) => const PageRouteJuzScreen()),
               );
               break;
-            case "Continue":
-              var value = await FirebaseAuth.instance.signInAnonymously();
-              await FirebaseFirestore.instance
-                  .collection("ListView")
-                  .where("userId", isEqualTo: value.user?.uid)
-                  .orderBy("createdDate", descending: true)
-                  .limit(1)
-                  .get()
-                  .then((value) => value.docs.forEach((element) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => JuzPageView(
-                                  element.data()["surahName"],
-                                  element.data()["surahNo"],
-                                  element.data()["surahAyah"],
-                                  element.data()["surahPage"],
-                                  element.data()["surahEndPage"],
-                                  '',
-                                  element.data()["currentPosition"],
-                                  Colors.black)),
-                        );
-
-                        //duplicateItems =
-                        //   List<String>.generate(114, (i) => );
-                      }));
-              break;
+           
             case "Count":
               Navigator.push(
                 context,
@@ -1178,9 +1220,10 @@ class SelectCard extends StatelessWidget {
         },
         child: Padding(
           padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
-          child: Card(
-              elevation: 5,
-              color: HexColor(choice.color),
+          child: Container(
+              //elevation: 5,
+                
+             decoration: BoxDecoration(borderRadius: BorderRadius.circular(16),color: Colors.white),
               child: Center(
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -1193,11 +1236,13 @@ class SelectCard extends StatelessWidget {
                       ),
                       Text(
                         choice.title,
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Schyler',
-                            color: HexColor("#ffde59")), //#a79162
+                        style: GoogleFonts.montserrat(
+                textStyle: TextStyle(
+                  fontSize: 20,
+                  color: HexColor('#2a6e2d'),
+                
+                ),
+              ), //#a79162
                       ),
                       const SizedBox(
                         height: 20,
